@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Chatbot</title>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat"></div>
+        <input type="text" id="user-input" placeholder="Type your message..."/>
+        <button id="send">Send</button>
+    </div>
+
+    <script>
+        // Responses from the chatbot
+        const chatbotResponses = [
+            "Hello!",
+            "How can I assist you?",
+            "Please ask your question.",
+            "I'm fine. Thank you",
+        ];
+
+        // Get references to HTML elements
+        const chatContainer = document.getElementById("chat-container");
+        const chat = document.getElementById("chat");
+        const userInput = document.getElementById("user-input");
+        const sendButton = document.getElementById("send");
+
+        // Function to add a message to the chat
+        function addMessage(message, isUser) {
+            const messageDiv = document.createElement("div");
+            messageDiv.className = isUser ? "user-message" : "bot-message";
+            messageDiv.textContent = message;
+            chat.appendChild(messageDiv);
+        }
+
+        // Function to simulate a chatbot response
+        function chatbotResponse() {
+            const randomIndex = Math.floor(Math.random() * chatbotResponses.length);
+            return chatbotResponses[randomIndex];
+        }
+
+        // Event listener for the send button
+        sendButton.addEventListener("click", function () {
+            const userMessage = userInput.value;
+            addMessage("You: " + userMessage, true);
+            userInput.value = "";
+            setTimeout(function () {
+                const botResponse = chatbotResponse();
+                addMessage("Chatbot: " + botResponse, false);
+            }, 500);
+        });
+
+        // Simulate an initial greeting from the chatbot
+        addMessage("Chatbot: Hello! How can I assist you?", false);
+    </script>
+
+    <style>
+        #chat-container {
+            width: 300px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        #chat {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        .user-message {
+            text-align: right;
+            color: blue;
+        }
+
+        .bot-message {
+            text-align: left;
+            color: green;
+        }
+    </style>
+</body>
+</html>
